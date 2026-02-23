@@ -70,9 +70,10 @@ async function main() {
   const selectedSpecs = await askOptionalSpecs(preset);
 
   // 4. Confirmation
+  const requiredFiles = requiredSpecs.map((s) => s.file);
   const allFiles = [
     '00-SCOPE-OF-WORK.md',
-    ...requiredSpecs.map((s) => s.file),
+    ...requiredFiles,
     ...selectedSpecs,
   ];
 
@@ -80,7 +81,19 @@ async function main() {
   console.log(chalk.bold('  Summary:'));
   console.log(chalk.white(`    Project:  ${projectName}`));
   console.log(chalk.white(`    Type:     ${preset.name}`));
-  console.log(chalk.white(`    Files:    ${allFiles.length} spec files`));
+  console.log('');
+  console.log(chalk.dim('    Required:'));
+  console.log(chalk.white(`      00-SCOPE-OF-WORK.md`));
+  for (const f of requiredFiles) {
+    console.log(chalk.white(`      ${f}`));
+  }
+  if (selectedSpecs.length > 0) {
+    console.log(chalk.dim('    Optional:'));
+    for (const f of selectedSpecs) {
+      console.log(chalk.dim(`      ${f}`));
+    }
+  }
+  console.log(chalk.dim(`    Total: ${allFiles.length} files`));
   console.log('');
 
   const { confirmed } = await inquirer.prompt([

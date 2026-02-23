@@ -18,22 +18,76 @@
 
 # 🏠 SITEMAP TREE
 
-<!-- TODO: Draw sitemap tree -->
+```
+/                          → Home / Landing
+├── /login                 → Login
+├── /register              → Register
+├── /dashboard             → Dashboard (auth required)
+│   ├── /dashboard/profile → User Profile
+│   └── /dashboard/settings → Settings
+├── /admin                 → Admin Panel (admin only)
+│   ├── /admin/users       → User Management
+│   └── /admin/settings    → System Settings
+└── /404                   → Not Found
+```
+
+<!-- TODO: Update with actual pages -->
 
 ---
 
 # 📋 PAGE DETAILS
 
-<!-- TODO: Define details for each page -->
+## Page: /
+
+| Field | Value |
+|-------|-------|
+| **Title** | Home |
+| **URL** | `/` |
+| **Access** | Public |
+| **Components** | Hero, Features, CTA |
+| **Data Loaded** | None (static) |
+
+## Page: /dashboard
+
+| Field | Value |
+|-------|-------|
+| **Title** | Dashboard |
+| **URL** | `/dashboard` |
+| **Access** | Authenticated users |
+| **Components** | Header, Sidebar, Stats Cards, Charts |
+| **Data Loaded** | User stats, recent activity |
+| **Key Actions** | View metrics, navigate to features |
+
+<!-- TODO: Add details for each page -->
 
 ---
 
 # 🧭 NAVIGATION
 
-<!-- TODO: Define primary/secondary navigation -->
+## Primary Navigation (Top Bar)
+| Label | URL | Visible To |
+|-------|-----|------------|
+| Home | `/` | All |
+| Dashboard | `/dashboard` | Authenticated |
+| Admin | `/admin` | Admin only |
+| Login | `/login` | Guest only |
+
+## Secondary Navigation (Sidebar)
+| Label | URL | Visible To |
+|-------|-----|------------|
+| Profile | `/dashboard/profile` | Authenticated |
+| Settings | `/dashboard/settings` | Authenticated |
+
+<!-- TODO: Update navigation items -->
 
 ---
 
 # 🔒 ACCESS CONTROL
 
-<!-- TODO: Define roles and accessible pages -->
+| Role | Accessible Pages | Restrictions |
+|------|-----------------|--------------|
+| Guest | Home, Login, Register | Cannot access dashboard |
+| User | Dashboard, Profile, Settings | Cannot access admin |
+| Admin | All pages | Full access |
+
+<!-- TODO: Update roles and permissions -->

@@ -1,6 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
+import inquirer from 'inquirer';
 import { requiredSpecs, optionalSpecs } from './specs.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,7 +13,17 @@ export async function initProject(projectName, selectedOptionalFiles, preset) {
   const spacDir = path.join(projectDir, 'spac');
 
   if (await fs.pathExists(spacDir)) {
-    throw new Error(`Directory "${projectName}/spac" already exists. Use a different name or remove it first.`);
+    const { overwrite } = await inquirer.prompt([{
+      type: 'confirm',
+      name: 'overwrite',
+      message: `Directory "${projectName}/spac" already exists. Overwrite?`,
+      default: false,
+    }]);
+    if (!overwrite) {
+      console.log('Cancelled.');
+      process.exit(0);
+    }
+    await fs.remove(spacDir);
   }
 
   await fs.ensureDir(spacDir);
@@ -61,7 +72,11 @@ async function copyTemplate(fileName, destDir, projectName, date, hints) {
 }
 
 async function generateScopeOfWork(spacDir, projectName, preset, specFiles) {
-  const specList = specFiles.map((f) => `| \`${f}\` | |`).join('\n');
+  const requiredFileNames = requiredSpecs.map((s) => s.file);
+  const specList = specFiles.map((f) => {
+    const type = requiredFileNames.includes(f) ? 'Required' : 'Optional';
+    return `| \`${f}\` | ${type} |`;
+  }).join('\n');
   const presetLabel = preset ? preset.name : 'General';
   const today = new Date().toISOString().split('T')[0];
 
@@ -94,8 +109,8 @@ All project specifications are in this folder. Read them in order before startin
 
 ### All Spec Files
 
-| File | Status |
-|------|--------|
+| File | Type |
+|------|------|
 ${specList}
 
 ---

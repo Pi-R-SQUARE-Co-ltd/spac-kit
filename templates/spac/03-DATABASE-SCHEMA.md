@@ -23,8 +23,18 @@ Prisma 6
 # 📊 ENTITY RELATIONSHIP DIAGRAM
 
 ```
-<!-- TODO: Draw ER Diagram -->
+┌──────────┐       ┌──────────────┐
+│  users   │──1:N──│   sessions   │
+└──────────┘       └──────────────┘
+     │
+    1:N
+     │
+┌──────────┐
+│  posts   │
+└──────────┘
 ```
+
+<!-- TODO: Update ER Diagram with actual tables -->
 
 ---
 
@@ -36,22 +46,42 @@ Prisma 6
 
 # 🔗 RELATIONS
 
-<!-- TODO: Define relations between tables -->
+| From | To | Type | FK Column | On Delete |
+|------|----|------|-----------|-----------|
+| sessions | users | N:1 | `user_id` | CASCADE |
+<!-- TODO: Add more relations -->
 
 ---
 
 # 📑 INDEXES
 
-<!-- TODO: Define indexes -->
+| Table | Columns | Type | Reason |
+|-------|---------|------|--------|
+| users | `email` | UNIQUE | Login lookup |
+| sessions | `token` | UNIQUE | Token validation |
+| sessions | `user_id` | BTREE | User sessions query |
+<!-- TODO: Add more indexes -->
 
 ---
 
 # 🏷 ENUMS
 
-<!-- TODO: Define enums -->
+### user_role
+| Value | Description |
+|-------|-------------|
+| `user` | Regular user |
+| `admin` | Administrator |
+
+<!-- TODO: Add more enums -->
 
 ---
 
 # 🌱 SEED DATA
 
-<!-- TODO: Define seed data for development -->
+```sql
+-- Default admin user
+INSERT INTO users (id, email, name, role)
+VALUES ('...', 'admin@example.com', 'Admin', 'admin');
+```
+
+<!-- TODO: Add seed data for development -->
