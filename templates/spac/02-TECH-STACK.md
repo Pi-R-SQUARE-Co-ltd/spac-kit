@@ -10,14 +10,14 @@
 
 | Item | Technology | Why |
 |------|-----------|-----|
-| Framework | Next.js 15 (App Router) | Full-stack React, SSR/SSG, Server Components |
-| Language | TypeScript 5.7 | Type safety, better DX |
-| Styling | Tailwind CSS 4 | Utility-first, rapid prototyping |
-| UI Components | Shadcn/UI (Radix UI) | Accessible, customizable, copy-paste |
-| State Management | Zustand | Lightweight, simple API |
-| Data Fetching | TanStack Query v5 | Caching, auto-refetch, optimistic updates |
-| Forms | React Hook Form + Zod | Performant forms + schema validation |
-| i18n | next-intl | Multi-language support |
+| Framework | Next.js {{VERSION_NEXTJS}} (App Router) | Full-stack React, SSR/SSG, Server Components |
+| Language | TypeScript {{VERSION_TYPESCRIPT}} | Type safety, better DX |
+| Styling | Tailwind CSS {{VERSION_TAILWIND}} | Utility-first, rapid prototyping |
+| UI Components | Shadcn/UI {{VERSION_SHADCN}} (Radix UI) | Accessible, customizable, copy-paste |
+| State Management | Zustand {{VERSION_ZUSTAND}} | Lightweight, simple API |
+| Data Fetching | TanStack Query {{VERSION_TANSTACK_QUERY}} | Caching, auto-refetch, optimistic updates |
+| Forms | React Hook Form {{VERSION_REACT_HOOK_FORM}} + Zod {{VERSION_ZOD}} | Performant forms + schema validation |
+| i18n | next-intl {{VERSION_NEXT_INTL}} | Multi-language support |
 
 <!-- TODO: Adjust based on your actual stack -->
 
@@ -27,12 +27,12 @@
 
 | Item | Technology | Why |
 |------|-----------|-----|
-| Runtime | Node.js 22+ | LTS, stable |
-| Framework | NestJS 11 | Modular, scalable, enterprise-ready |
+| Runtime | Node.js {{VERSION_NODE}}+ | LTS, stable |
+| Framework | NestJS {{VERSION_NESTJS}} | Modular, scalable, enterprise-ready |
 | API Style | REST | Standard, easy to consume |
 | Auth | JWT + OAuth (Google) | Stateless auth + social login |
 | Validation | Class Validator + Zod | DTO validation |
-| Email | Resend | Developer-friendly email API |
+| Email | Resend {{VERSION_RESEND}} | Developer-friendly email API |
 
 <!-- TODO: Adjust based on your actual stack -->
 
@@ -42,9 +42,9 @@
 
 | Item | Technology | Why |
 |------|-----------|-----|
-| Primary DB | PostgreSQL 17 | Reliable, feature-rich, extensions |
-| ORM | Prisma 6 | Type-safe queries, migrations, studio |
-| Cache | Redis 7 | Fast caching, session, queue |
+| Primary DB | PostgreSQL {{VERSION_POSTGRESQL}} | Reliable, feature-rich, extensions |
+| ORM | Prisma {{VERSION_PRISMA}} | Type-safe queries, migrations, studio |
+| Cache | Redis {{VERSION_REDIS}} | Fast caching, session, queue |
 | File Storage | Cloudflare R2 (S3-compatible) | Affordable, no egress fees |
 
 ---
@@ -65,30 +65,13 @@
 
 | Item | Technology |
 |------|-----------|
-| Package Manager | pnpm 9+ |
-| Monorepo | Turborepo |
-| Linter | ESLint |
-| Formatter | Prettier |
-| Testing | Vitest + Playwright |
-| UI Dev | Shadcn CLI (`npx shadcn-ui@latest add <component>`) |
+| Package Manager | pnpm {{VERSION_PNPM}}+ |
+| Monorepo | Turborepo {{VERSION_TURBOREPO}} |
+| Linter | ESLint {{VERSION_ESLINT}} |
+| Formatter | Prettier {{VERSION_PRETTIER}} |
+| Testing | Vitest {{VERSION_VITEST}} + Playwright {{VERSION_PLAYWRIGHT}} |
+| UI Dev | Shadcn CLI (`npx shadcn@latest add <component>`) |
 
 ---
 
-# 📦 ARCHITECTURE DIAGRAM
-
-```
-                        ┌─────────────┐
-                        │   Vercel     │
-                        │  (Frontend)  │
-                        └──────┬──────┘
-                               │
-┌──────────┐            ┌──────▼──────┐            ┌──────────────┐
-│  Client  │───────────▶│   NestJS    │───────────▶│ PostgreSQL   │
-│ (Browser)│            │   (API)     │            │ + Redis      │
-└──────────┘            └──────┬──────┘            └──────────────┘
-                               │
-                        ┌──────▼──────┐
-                        │ Cloudflare  │
-                        │     R2      │
-                        └─────────────┘
-```
+{{ARCHITECTURE_HINT}}

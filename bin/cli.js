@@ -112,7 +112,7 @@ async function main() {
 
   // 5. Create with progress
   console.log('');
-  console.log(chalk.dim('  Creating specs...'));
+  console.log(chalk.dim('  Fetching latest package versions...'));
 
   const { spacDir } = await initProject(projectName, selectedSpecs, preset);
 

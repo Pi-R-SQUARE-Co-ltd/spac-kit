@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import inquirer from 'inquirer';
 import { requiredSpecs, optionalSpecs } from './specs.js';
+import { fetchLatestVersions } from './versions.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +31,10 @@ export async function initProject(projectName, selectedOptionalFiles, preset) {
 
   const today = new Date().toISOString().split('T')[0];
   const hints = preset ? preset.hints : {};
+
+  // Fetch latest package versions from npm
+  const versions = await fetchLatestVersions();
+  Object.assign(hints, versions);
 
   // Copy required specs
   for (const spec of requiredSpecs) {
@@ -66,7 +71,8 @@ async function copyTemplate(fileName, destDir, projectName, date, hints) {
   }
 
   // Clear any remaining unreplaced hint placeholders
-  content = content.replace(/\{\{[A-Z_]+_HINT\}\}/g, '<!-- TODO -->');
+  // Clear any remaining unreplaced placeholders
+  content = content.replace(/\{\{[A-Z_]+\}\}/g, '<!-- TODO -->');
 
   await fs.writeFile(destPath, content, 'utf-8');
 }

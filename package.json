@@ -1,6 +1,6 @@
 {
   "name": "@pirsquare.auto/spac-kit",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Spec-Driven Development Kit — Generate spec templates for any project in seconds",
   "type": "module",
   "main": "src/init.js",

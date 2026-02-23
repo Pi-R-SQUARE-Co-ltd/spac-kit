@@ -44,6 +44,34 @@ export const projectTypes = [
       FEATURES_HINT: 'Authentication, Dashboard, CRUD operations, User management',
       API_HINT: 'REST API with JWT Auth — users, resources CRUD',
       PAGES_HINT: `Home, Login, Register, Dashboard, Profile, Settings`,
+      ARCHITECTURE_HINT: `# 📦 ARCHITECTURE DIAGRAM (Monorepo)
+
+\`\`\`
+project-root/ (Turborepo)
+├── apps/
+│   ├── web/          ← Next.js (Frontend)    :3000
+│   └── api/          ← NestJS (Backend API)  :3001
+├── packages/
+│   ├── database/     ← Prisma schema + client
+│   ├── ui/           ← Shared UI components
+│   └── config/       ← Shared ESLint, TS configs
+└── turbo.json
+
+                        ┌─────────────┐
+                        │   Vercel     │
+                        │  (apps/web)  │
+                        └──────┬──────┘
+                               │
+┌──────────┐            ┌──────▼──────┐            ┌──────────────┐
+│  Client  │───────────▶│   NestJS    │───────────▶│ PostgreSQL   │
+│ (Browser)│            │  (apps/api) │            │ + Redis      │
+└──────────┘            └──────┬──────┘            └──────────────┘
+                               │
+                        ┌──────▼──────┐
+                        │ Cloudflare  │
+                        │     R2      │
+                        └─────────────┘
+\`\`\``,
     },
   },
   {
@@ -76,6 +104,19 @@ export const projectTypes = [
       FEATURES_HINT: 'RESTful Endpoints, API Key Auth, Rate Limiting, Logging',
       API_HINT: 'REST/GraphQL API — versioned endpoints, API key + JWT auth, rate limiting',
       PAGES_HINT: 'API Documentation, Health Check endpoint',
+      ARCHITECTURE_HINT: `# 📦 ARCHITECTURE DIAGRAM
+
+\`\`\`
+┌──────────┐            ┌──────────────┐            ┌──────────────┐
+│  Client  │───────────▶│   NestJS     │───────────▶│ PostgreSQL   │
+│ (Mobile/ │            │   (API)      │            │ + Redis      │
+│  Web)    │            └──────┬───────┘            └──────────────┘
+└──────────┘                   │
+                        ┌──────▼──────┐
+                        │ Cloudflare  │
+                        │     R2      │
+                        └─────────────┘
+\`\`\``,
     },
   },
   {
@@ -145,6 +186,30 @@ export const projectTypes = [
       FEATURES_HINT: 'Product Catalog, Shopping Cart, Checkout, Payment, Order Tracking, Admin Panel',
       API_HINT: 'REST API — products, cart, orders, payments, categories, reviews',
       PAGES_HINT: 'Home, Products, Product Detail, Cart, Checkout, Order History, Admin Dashboard',
+      ARCHITECTURE_HINT: `# 📦 ARCHITECTURE DIAGRAM (Monorepo)
+
+\`\`\`
+project-root/ (Turborepo)
+├── apps/
+│   ├── web/          ← Next.js (Storefront)  :3000
+│   ├── admin/        ← Next.js (Admin Panel) :3002
+│   └── api/          ← NestJS (Backend API)  :3001
+├── packages/
+│   ├── database/     ← Prisma schema + client
+│   ├── ui/           ← Shared UI components
+│   └── config/       ← Shared ESLint, TS configs
+└── turbo.json
+
+┌───────────┐           ┌──────────────┐           ┌──────────────┐
+│ Storefront│──────────▶│   NestJS     │──────────▶│ PostgreSQL   │
+│ (apps/web)│           │  (apps/api)  │           │ + Redis      │
+└───────────┘           └──────┬───────┘           └──────────────┘
+┌───────────┐                  │
+│   Admin   │──────────────────┘       ┌──────────────┐
+│(apps/admin)│                         │    Stripe     │
+└───────────┘                          │  (Payments)   │
+                                       └──────────────┘
+\`\`\``,
     },
   },
   {
@@ -203,6 +268,30 @@ export const projectTypes = [
       FEATURES_HINT: 'Multi-tenant, Team Management, Subscription Billing, Dashboard, Settings',
       API_HINT: 'REST API — organizations, users, subscriptions, billing, invitations',
       PAGES_HINT: 'Landing, Pricing, Login, Dashboard, Team Settings, Billing, Admin',
+      ARCHITECTURE_HINT: `# 📦 ARCHITECTURE DIAGRAM (Monorepo)
+
+\`\`\`
+project-root/ (Turborepo)
+├── apps/
+│   ├── web/          ← Next.js (Dashboard)   :3000
+│   ├── landing/      ← Next.js (Marketing)   :3002
+│   └── api/          ← NestJS (Backend API)  :3001
+├── packages/
+│   ├── database/     ← Prisma schema + client
+│   ├── ui/           ← Shared UI components
+│   └── config/       ← Shared ESLint, TS configs
+└── turbo.json
+
+┌───────────┐           ┌──────────────┐           ┌──────────────┐
+│ Dashboard │──────────▶│   NestJS     │──────────▶│ PostgreSQL   │
+│ (apps/web)│           │  (apps/api)  │           │ + Redis      │
+└───────────┘           └──────┬───────┘           └──────────────┘
+┌───────────┐                  │
+│  Landing  │                  │       ┌──────────────┐
+│(apps/     │                  └──────▶│    Stripe     │
+│ landing)  │                          │  (Billing)    │
+└───────────┘                          └──────────────┘
+\`\`\``,
     },
   },
   {
@@ -238,6 +327,19 @@ export const projectTypes = [
       FEATURES_HINT: 'Authentication, Push Notifications, Offline Support, Profile, Settings',
       API_HINT: 'REST API for mobile — auth, push notifications, sync, media upload',
       PAGES_HINT: 'Splash, Login, Home (Tab), Profile, Settings, Notifications',
+      ARCHITECTURE_HINT: `# 📦 ARCHITECTURE DIAGRAM
+
+\`\`\`
+┌──────────────┐         ┌──────────────┐         ┌──────────────┐
+│  Mobile App  │────────▶│   NestJS     │────────▶│ PostgreSQL   │
+│ (React Native│         │   (API)      │         │ + Redis      │
+│  / Expo)     │         └──────┬───────┘         └──────────────┘
+└──────────────┘                │
+                         ┌──────▼──────┐
+                         │  Firebase   │
+                         │ (Push/Auth) │
+                         └─────────────┘
+\`\`\``,
     },
   },
   {
@@ -269,6 +371,14 @@ export const projectTypes = [
       FEATURES_HINT: 'Hero Section, Features, Pricing, Testimonials, Contact Form, Blog',
       API_HINT: 'Contact form API, Newsletter subscription, CMS integration',
       PAGES_HINT: 'Home, About, Features, Pricing, Blog, Contact, Privacy Policy',
+      ARCHITECTURE_HINT: `# 📦 ARCHITECTURE DIAGRAM
+
+\`\`\`
+┌──────────┐            ┌──────────────┐
+│  Client  │───────────▶│   Next.js    │───────────▶ CMS (Headless)
+│ (Browser)│            │   / Astro    │
+└──────────┘            └──────────────┘
+\`\`\``,
     },
   },
   {
@@ -306,6 +416,14 @@ export const projectTypes = [
       FEATURES_HINT: 'CRUD Management, Reports, Role-based Access, Audit Logs, Data Export',
       API_HINT: 'REST API — CRUD endpoints, reports, export (CSV/Excel), audit logs',
       PAGES_HINT: 'Login, Dashboard, Data Tables, Create/Edit Forms, Reports, Settings, User Management',
+      ARCHITECTURE_HINT: `# 📦 ARCHITECTURE DIAGRAM
+
+\`\`\`
+┌──────────┐            ┌──────────────┐            ┌──────────────┐
+│  Admin   │───────────▶│   NestJS     │───────────▶│ PostgreSQL   │
+│ (Browser)│            │   (API)      │            │ + Redis      │
+└──────────┘            └──────────────┘            └──────────────┘
+\`\`\``,
     },
   },
 ];
