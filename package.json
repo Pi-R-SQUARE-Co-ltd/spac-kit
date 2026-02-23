@@ -1,7 +1,7 @@
 {
-  "name": "@pirsquare/spac-kit",
+  "name": "@pirsquare.auto/spac-kit",
   "version": "1.0.0",
-  "description": "Spec-Driven Development Kit — สร้าง spec templates สำหรับเริ่มต้นโปรเจค",
+  "description": "Spec-Driven Development Kit — Generate spec templates for any project in seconds",
   "type": "module",
   "main": "src/init.js",
   "bin": {

@@ -11,7 +11,7 @@ Generate spec templates for any project in seconds. One command gives you a comp
 ### Step 1: Generate Specs
 
 ```bash
-npx @pirsquare/spac-kit init
+npx @pirsquare.auto/spac-kit init
 ```
 
 The CLI walks you through:
@@ -58,7 +58,7 @@ my-awesome-app/
     └── 08-SITEMAP.md              ← 📎 Optional
 ```
 
-> Already know your project name? Run directly: `npx @pirsquare/spac-kit init my-project`
+> Already know your project name? Run directly: `npx @pirsquare.auto/spac-kit init my-project`
 
 ---
 
@@ -100,13 +100,13 @@ The AI reads your specs and understands the full context — tech stack, databas
 ### npx (recommended — no install needed)
 
 ```bash
-npx @pirsquare/spac-kit init
+npx @pirsquare.auto/spac-kit init
 ```
 
 ### Global install
 
 ```bash
-npm i -g @pirsquare/spac-kit
+npm i -g @pirsquare.auto/spac-kit
 spac-kit init
 ```
 
