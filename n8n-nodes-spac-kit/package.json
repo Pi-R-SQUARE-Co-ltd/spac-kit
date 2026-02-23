@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-spac-kit-pirsquare",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "n8n community node for SPAC-KIT — Spec-Driven Development Kit",
   "keywords": [
     "n8n-community-node-package",
@@ -30,21 +30,13 @@
     "n8nNodesApiVersion": 1,
     "nodes": [
       "dist/nodes/SpacKit/SpacKit.node.js"
-    ],
-    "credentials": [
-      "dist/credentials/SpacKitApi.credentials.js"
     ]
   },
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "@pirsquare.auto/spac-kit": "^2.0.0"
-  },
-  "bundledDependencies": [
-    "@pirsquare.auto/spac-kit"
-  ],
   "devDependencies": {
+    "@types/node": "^22.0.0",
     "n8n-workflow": "^1.0.0",
     "typescript": "^5.7.0"
   },

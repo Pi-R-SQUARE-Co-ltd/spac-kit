@@ -4,6 +4,17 @@ import type {
   INodeType,
   INodeTypeDescription,
 } from 'n8n-workflow';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
+
+async function runSpacKit(args: string): Promise<string> {
+  const { stdout } = await execAsync(`npx -y @pirsquare.auto/spac-kit ${args}`, {
+    timeout: 60000,
+  });
+  return stdout.trim();
+}
 
 export class SpacKit implements INodeType {
   description: INodeTypeDescription = {
@@ -20,12 +31,6 @@ export class SpacKit implements INodeType {
     usableAsTool: true,
     inputs: ['main'],
     outputs: ['main'],
-    credentials: [
-      {
-        name: 'spacKitApi',
-        required: false,
-      },
-    ],
     properties: [
       {
         displayName: 'Operation',
@@ -54,7 +59,6 @@ export class SpacKit implements INodeType {
         ],
         default: 'createProject',
       },
-      // Create Project fields
       {
         displayName: 'Project Name',
         name: 'projectName',
@@ -140,9 +144,6 @@ export class SpacKit implements INodeType {
     const returnData: INodeExecutionData[] = [];
     const operation = this.getNodeParameter('operation', 0) as string;
 
-    // Dynamic import for ESM package
-    const spacKit: any = await Function('return import("@pirsquare.auto/spac-kit")')();
-
     for (let i = 0; i < items.length; i++) {
       try {
         if (operation === 'createProject') {
@@ -152,35 +153,51 @@ export class SpacKit implements INodeType {
           const overwrite = this.getNodeParameter('overwrite', i) as boolean;
           const optionalSpecs = this.getNodeParameter('optionalSpecs', i) as string[];
 
-          const result = await spacKit.createProject(projectName, {
-            preset: preset || undefined,
-            optionalSpecs,
-            overwrite,
-            targetDir,
+          // Use Node.js API via inline script
+          const script = `
+            const m = await import("@pirsquare.auto/spac-kit");
+            const r = await m.createProject(${JSON.stringify(projectName)}, {
+              preset: ${JSON.stringify(preset || undefined)},
+              optionalSpecs: ${JSON.stringify(optionalSpecs)},
+              overwrite: ${overwrite},
+              targetDir: ${JSON.stringify(targetDir)},
+            });
+            process.stdout.write(JSON.stringify({ success: true, projectDir: r.projectDir, spacDir: r.spacDir, files: r.files, fileCount: r.files.length }));
+          `.trim();
+
+          const { stdout } = await execAsync(
+            `npx -y @pirsquare.auto/spac-kit node -e '${script.replace(/'/g, "'\\''")}'`,
+            { timeout: 120000 },
+          ).catch(async () => {
+            // Fallback: use node directly with dynamic import
+            return execAsync(
+              `node --input-type=module -e "${script.replace(/"/g, '\\"')}"`,
+              { timeout: 120000, env: { ...process.env, NODE_PATH: '' } },
+            );
           });
 
-          returnData.push({
-            json: {
-              success: true,
-              projectDir: result.projectDir,
-              spacDir: result.spacDir,
-              files: result.files,
-              fileCount: result.files.length,
-            },
-          });
+          returnData.push({ json: JSON.parse(stdout) });
         } else if (operation === 'getPresets') {
-          const presets = spacKit.getPresets();
-          returnData.push({
-            json: {
-              presets,
-              requiredSpecs: spacKit.getRequiredSpecs(),
-              optionalSpecs: spacKit.getOptionalSpecs(),
-            },
-          });
+          const script = `
+            import{getPresets as a,getRequiredSpecs as b,getOptionalSpecs as c}from"@pirsquare.auto/spac-kit";
+            process.stdout.write(JSON.stringify({presets:a(),requiredSpecs:b(),optionalSpecs:c()}));
+          `.trim();
+          const { stdout } = await execAsync(
+            `node --input-type=module -e "${script.replace(/"/g, '\\"')}"`,
+            { timeout: 60000 },
+          );
+          returnData.push({ json: JSON.parse(stdout) });
         } else if (operation === 'getVersions') {
-          const versionsModule: any = await Function('return import("@pirsquare.auto/spac-kit/versions")')();
-          const versions = await versionsModule.fetchLatestVersions();
-          returnData.push({ json: versions });
+          const script = `
+            import{fetchLatestVersions}from"@pirsquare.auto/spac-kit/versions";
+            const v=await fetchLatestVersions();
+            process.stdout.write(JSON.stringify(v));
+          `.trim();
+          const { stdout } = await execAsync(
+            `node --input-type=module -e "${script.replace(/"/g, '\\"')}"`,
+            { timeout: 60000 },
+          );
+          returnData.push({ json: JSON.parse(stdout) });
         }
       } catch (error: unknown) {
         if (this.continueOnFail()) {
