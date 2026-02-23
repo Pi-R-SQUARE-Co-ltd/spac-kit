@@ -9,7 +9,7 @@ export class SpacKit implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'SPAC-KIT',
     name: 'spacKit',
-    icon: 'file:spackit.svg',
+    icon: 'file:pirsquare.png',
     group: ['transform'],
     version: 1,
     subtitle: '={{$parameter["operation"]}}',
@@ -17,6 +17,7 @@ export class SpacKit implements INodeType {
     defaults: {
       name: 'SPAC-KIT',
     },
+    usableAsTool: true,
     inputs: ['main'],
     outputs: ['main'],
     credentials: [

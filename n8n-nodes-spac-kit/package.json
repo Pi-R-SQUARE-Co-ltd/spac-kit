@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-spac-kit-pirsquare",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "n8n community node for SPAC-KIT — Spec-Driven Development Kit",
   "keywords": [
     "n8n-community-node-package",
@@ -15,7 +15,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "tsc && cp nodes/SpacKit/spackit.svg dist/nodes/SpacKit/spackit.svg",
+    "build": "tsc && cp nodes/SpacKit/pirsquare.png dist/nodes/SpacKit/pirsquare.png",
     "dev": "tsc --watch",
     "lint": "tsc --noEmit"
   },
