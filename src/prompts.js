@@ -8,11 +8,11 @@ export async function askProjectName(defaultName) {
     {
       type: 'input',
       name: 'projectName',
-      message: 'ชื่อโปรเจค:',
+      message: 'Project name:',
       validate: (input) => {
-        if (!input.trim()) return 'กรุณาใส่ชื่อโปรเจค';
+        if (!input.trim()) return 'Please enter a project name';
         if (!/^[a-zA-Z0-9_-]+$/.test(input.trim())) {
-          return 'ชื่อโปรเจคใช้ได้เฉพาะ a-z, 0-9, - และ _';
+          return 'Project name can only contain a-z, 0-9, - and _';
         }
         return true;
       },
@@ -27,7 +27,7 @@ export async function askProjectType() {
     {
       type: 'list',
       name: 'projectType',
-      message: 'ประเภทโปรเจค:',
+      message: 'Project type:',
       choices: projectTypes.map((pt) => ({
         name: `${pt.name}  —  ${pt.description}`,
         value: pt.value,
@@ -43,7 +43,7 @@ export async function askOptionalSpecs(preset) {
     {
       type: 'checkbox',
       name: 'selectedSpecs',
-      message: 'เลือก spec เพิ่มเติม (required specs จะรวมอยู่แล้ว):',
+      message: 'Select additional specs (required specs are always included):',
       choices: optionalSpecs.map((spec) => ({
         name: spec.name,
         value: spec.file,

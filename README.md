@@ -2,20 +2,19 @@
 
 **by Pi R Square Co., LTD**
 
-สร้าง spec templates สำหรับเริ่มต้นโปรเจคแบบ Spec-Driven Development
-แค่รันคำสั่งเดียว → ได้โฟลเดอร์ `spac/` พร้อม spec documents ครบ → ส่งต่อให้ทีมหรือ AI ทำงานได้เลย
+Generate spec templates for any project in seconds. One command gives you a complete `spac/` folder with everything your team (and AI) needs to start building.
 
 ---
 
-## ขั้นตอนการใช้งาน
+## How It Works
 
-### Step 1: สร้าง Spec
+### Step 1: Generate Specs
 
 ```bash
 npx @pirsquare/spac-kit init
 ```
 
-CLI จะถามทีละขั้น:
+The CLI walks you through:
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -23,32 +22,32 @@ CLI จะถามทีละขั้น:
 │  by Pi R Square Co., LTD                        │
 └──────────────────────────────────────────────────┘
 
-? ชื่อโปรเจค: my-awesome-app
+? Project name: my-awesome-app
 
-? ประเภทโปรเจค:
-  ❯ Web App (Full-stack)        — เว็บแอปทั่วไป
-    API / Backend Service       — API-only
-    E-commerce / Marketplace    — ร้านค้าออนไลน์
-    SaaS Platform               — Multi-tenant SaaS
-    Mobile App                  — React Native / Flutter
-    Landing Page / Marketing    — เว็บโปรโมท
-    Internal Tool / Admin       — ระบบหลังบ้าน
+? Project type:
+  ❯ Web App (Full-stack)
+    API / Backend Service
+    E-commerce / Marketplace
+    SaaS Platform
+    Mobile App
+    Landing Page / Marketing Site
+    Internal Tool / Admin Dashboard
 
-? เลือก spec เพิ่มเติม (required specs จะรวมอยู่แล้ว):
+? Select additional specs (required specs are always included):
   ◉ API Design
   ◉ User Stories
   ◉ Roadmap
   ◉ Sitemap
 
-✅ สร้างโปรเจค my-awesome-app สำเร็จ!
+✅ Project my-awesome-app created successfully!
 ```
 
-ผลลัพธ์ที่ได้:
+Output:
 
 ```
 my-awesome-app/
 └── spac/
-    ├── 00-SCOPE-OF-WORK.md       ← จุดเริ่มต้น (สำหรับทีมและ AI)
+    ├── 00-SCOPE-OF-WORK.md       ← Entry point (for team & AI)
     ├── 01-PRD.md                  ← ⭐ Required
     ├── 02-TECH-STACK.md           ← ⭐ Required
     ├── 03-DATABASE-SCHEMA.md      ← ⭐ Required
@@ -59,46 +58,46 @@ my-awesome-app/
     └── 08-SITEMAP.md              ← 📎 Optional
 ```
 
-> ถ้ารู้ชื่อโปรเจคแล้ว ใส่ชื่อตรงๆ ได้เลย: `npx @pirsquare/spac-kit init my-project`
+> Already know your project name? Run directly: `npx @pirsquare/spac-kit init my-project`
 
 ---
 
-### Step 2: กรอก Spec
+### Step 2: Fill in Specs
 
-เปิดแต่ละไฟล์ใน `spac/` แล้วกรอกข้อมูลตาม `<!-- TODO -->` ที่เป็น guide ไว้ให้
+Open each file in `spac/` and fill in the sections. Each template comes with pre-filled defaults and `<!-- TODO -->` guides.
 
-**ลำดับแนะนำ:**
+**Recommended order:**
 
-| ลำดับ | ไฟล์ | กรอกอะไร |
-|-------|------|----------|
-| 1 | `01-PRD.md` | โปรเจคนี้คืออะไร? แก้ปัญหาอะไร? ใครใช้? MVP features? |
-| 2 | `02-TECH-STACK.md` | ใช้ Framework, DB, Hosting อะไร? |
-| 3 | `03-DATABASE-SCHEMA.md` | ตาราง, columns, relations, indexes |
-| 4 | `04-PROJECT-STRUCTURE.md` | โฟลเดอร์จัดวางยังไง? scripts อะไรบ้าง? |
-| 5+ | Optional specs | API endpoints, User stories, Roadmap, Sitemap |
+| Order | File | What to fill in |
+|-------|------|-----------------|
+| 1 | `01-PRD.md` | What is this project? What problem does it solve? Who uses it? |
+| 2 | `02-TECH-STACK.md` | Framework, database, hosting, libraries |
+| 3 | `03-DATABASE-SCHEMA.md` | Tables, columns, relations, indexes |
+| 4 | `04-PROJECT-STRUCTURE.md` | Folder structure, apps, packages, scripts |
+| 5+ | Optional specs | API endpoints, user stories, roadmap, sitemap |
 
-> แต่ละไฟล์มี **Suggested hints** ตามประเภทโปรเจคที่เลือก เช่น E-commerce จะมี tables `products`, `orders`, `payments` พร้อมให้แล้ว
-
----
-
-### Step 3: ส่งต่อให้ AI ทำงาน
-
-เปิดไฟล์ `spac/00-SCOPE-OF-WORK.md` → มีคำแนะนำวิธีใช้กับ AI แต่ละตัว:
-
-| AI Tool | วิธีใช้ |
-|---------|--------|
-| **Claude Code** | คัดลอกเนื้อหา `00-SCOPE-OF-WORK.md` ไปใส่ `CLAUDE.md` ที่ root ของโปรเจค แล้วเปิด Claude Code ได้เลย |
-| **ChatGPT** | คัดลอก spec files ทั้งหมดวางเป็น context ก่อนเริ่มสั่งงาน |
-| **Cursor / AI IDE** | เพิ่มโฟลเดอร์ `spac/` เป็น context files ในการตั้งค่า |
-| **AI อื่นๆ** | ส่ง `00-SCOPE-OF-WORK.md` + spec files ที่เกี่ยวข้องเป็น reference |
-
-AI จะอ่าน specs แล้วเข้าใจ context ทั้งหมดของโปรเจค → เขียนโค้ดตาม tech stack, DB schema, project structure ที่กำหนดไว้ได้เลย
+> Each file includes **suggested hints** based on the project type you selected. For example, E-commerce comes with `products`, `orders`, `payments` tables ready to go.
 
 ---
 
-## วิธีติดตั้ง
+### Step 3: Hand Off to AI
 
-### npx (แนะนำ — ไม่ต้องติดตั้ง)
+Open `spac/00-SCOPE-OF-WORK.md` for instructions on how to use with any AI tool:
+
+| AI Tool | How to use |
+|---------|-----------|
+| **Claude Code** | Copy `00-SCOPE-OF-WORK.md` content into `CLAUDE.md` at the project root |
+| **ChatGPT** | Paste all spec files as context before giving instructions |
+| **Cursor / AI IDE** | Add `spac/` folder as context files in settings |
+| **Other AI** | Send `00-SCOPE-OF-WORK.md` along with relevant spec files as reference |
+
+The AI reads your specs and understands the full context — tech stack, database schema, project structure — then builds accordingly.
+
+---
+
+## Installation
+
+### npx (recommended — no install needed)
 
 ```bash
 npx @pirsquare/spac-kit init
@@ -114,17 +113,17 @@ spac-kit init
 ### GitHub Template
 
 ```bash
-gh repo create my-project --template pirsquare/spac-kit-pirsquare
+gh repo create my-project --template Pi-R-SQUARE-Co-ltd/spac-kit
 ```
 
 ---
 
-## ประเภทโปรเจค (Presets)
+## Project Type Presets
 
-เมื่อเลือกประเภท จะได้ template ที่ปรับตาม context — เช่น DB tables, tech stack, features ที่แนะนำ
+When you select a project type, templates are customized with relevant defaults — database tables, tech stack suggestions, feature hints.
 
-| ประเภท | ตัวอย่าง Hints |
-|--------|---------------|
+| Type | Hints |
+|------|-------|
 | **Web App (Full-stack)** | Next.js + Node.js + PostgreSQL, users/sessions tables |
 | **API / Backend Service** | Express/Fastify + PostgreSQL + Redis, api_logs table |
 | **E-commerce / Marketplace** | Next.js + Stripe, products/orders/categories tables |
@@ -137,17 +136,17 @@ gh repo create my-project --template pirsquare/spac-kit-pirsquare
 
 ## Spec Files
 
-| # | ไฟล์ | Type | เนื้อหา |
-|---|------|------|---------|
-| 00 | SCOPE-OF-WORK.md | Auto | ภาพรวมโปรเจค, ลำดับการอ่าน, rules, วิธีใช้กับ AI |
-| 01 | PRD.md | Required | Product Vision, Target Users, MVP Features, KPIs |
-| 02 | TECH-STACK.md | Required | Frontend, Backend, Database, Infra |
-| 03 | DATABASE-SCHEMA.md | Required | Tables, Relations, Indexes, Enums |
-| 04 | PROJECT-STRUCTURE.md | Required | Folder Structure, Apps, Packages |
-| 05 | API-DESIGN.md | Optional | Endpoints, Auth, Error Codes |
-| 06 | USER-STORIES.md | Optional | Personas, User Flows, Acceptance Criteria |
-| 07 | ROADMAP.md | Optional | Phases, Milestones, Timeline |
-| 08 | SITEMAP.md | Optional | Pages, Navigation, Access Control |
+| # | File | Type | Contents |
+|---|------|------|----------|
+| 00 | SCOPE-OF-WORK.md | Auto | Project overview, reading order, rules, AI usage guide |
+| 01 | PRD.md | Required | Product vision, target users, MVP features, KPIs |
+| 02 | TECH-STACK.md | Required | Frontend, backend, database, infrastructure |
+| 03 | DATABASE-SCHEMA.md | Required | Tables, relations, indexes, enums |
+| 04 | PROJECT-STRUCTURE.md | Required | Folder structure, apps, packages, scripts |
+| 05 | API-DESIGN.md | Optional | Endpoints, authentication, error codes |
+| 06 | USER-STORIES.md | Optional | Personas, user flows, acceptance criteria |
+| 07 | ROADMAP.md | Optional | Phases, milestones, timeline |
+| 08 | SITEMAP.md | Optional | Pages, navigation, access control |
 
 ---
 

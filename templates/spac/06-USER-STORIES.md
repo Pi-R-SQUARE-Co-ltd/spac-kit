@@ -6,22 +6,22 @@
 
 # 📌 PERSONAS
 
-<!-- TODO: ระบุ personas ของผู้ใช้ -->
+<!-- TODO: Define user personas -->
 
 ---
 
 # 📖 USER STORIES
 
-<!-- TODO: เขียน user stories แยกตาม Epic -->
+<!-- TODO: Write user stories by Epic -->
 
 ---
 
 # 🔄 USER FLOWS
 
-<!-- TODO: วาด user flows หลักๆ -->
+<!-- TODO: Draw key user flows -->
 
 ---
 
 # 📊 STORY MAP
 
-<!-- TODO: จัด story map แบ่งตาม activity → task -->
+<!-- TODO: Organize story map by activity → task -->

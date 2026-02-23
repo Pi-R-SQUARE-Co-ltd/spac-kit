@@ -16,28 +16,28 @@
 
 # 🏁 PHASE 1 — MVP
 
-<!-- TODO: ระบุ milestones และ deliverables -->
+<!-- TODO: Define milestones and deliverables -->
 
 ---
 
 # 🚀 PHASE 2 — ENHANCEMENT
 
-<!-- TODO: ระบุ milestones และ deliverables -->
+<!-- TODO: Define milestones and deliverables -->
 
 ---
 
 # 📈 PHASE 3 — SCALE
 
-<!-- TODO: ระบุ milestones และ deliverables -->
+<!-- TODO: Define milestones and deliverables -->
 
 ---
 
 # 🔄 RELEASE PLAN
 
-<!-- TODO: ระบุ version, date, features -->
+<!-- TODO: Define version, date, features -->
 
 ---
 
 # ⚠️ DEPENDENCIES & RISKS
 
-<!-- TODO: ระบุ dependencies และ risks -->
+<!-- TODO: Define dependencies and risks -->

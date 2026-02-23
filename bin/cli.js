@@ -29,27 +29,27 @@ async function main() {
     console.log(chalk.yellow('Usage: spac-kit init [project-name]'));
     console.log('');
     console.log('Commands:');
-    console.log('  init [name]  สร้างโปรเจคใหม่พร้อม spec templates');
+    console.log('  init [name]  Create a new project with spec templates');
     process.exit(1);
   }
 
-  // 1. ชื่อโปรเจค
+  // 1. Project name
   const projectName = await askProjectName(projectNameArg);
 
-  // 2. ประเภทโปรเจค
+  // 2. Project type
   const preset = await askProjectType();
   console.log(chalk.dim(`  → ${preset.name}`));
 
-  // 3. เลือก optional specs (pre-checked ตาม preset)
+  // 3. Optional specs (pre-checked based on preset)
   const selectedSpecs = await askOptionalSpecs(preset);
 
   console.log('');
 
   const { spacDir } = await initProject(projectName, selectedSpecs, preset);
 
-  // แสดงผลลัพธ์
-  console.log(chalk.green.bold(`✅ สร้างโปรเจค ${projectName} สำเร็จ!`));
-  console.log(chalk.dim(`   ประเภท: ${preset.name}`));
+  // Display result
+  console.log(chalk.green.bold(`✅ Project ${projectName} created successfully!`));
+  console.log(chalk.dim(`   Type: ${preset.name}`));
   console.log('');
   console.log(chalk.white(`  ${projectName}/`));
   console.log(chalk.white('  └── spac/'));
@@ -66,7 +66,7 @@ async function main() {
   }
 
   console.log('');
-  console.log(chalk.dim('  💡 ใช้ spac/00-SCOPE-OF-WORK.md เป็นจุดเริ่มต้นสำหรับทีมและ AI'));
+  console.log(chalk.dim('  💡 Use spac/00-SCOPE-OF-WORK.md as the entry point for your team & AI'));
   console.log('');
 }
 

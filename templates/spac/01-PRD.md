@@ -7,13 +7,13 @@
 # 📌 EXECUTIVE SUMMARY
 
 ## Product Vision
-<!-- TODO: อธิบาย vision ของโปรดักส์ — ปัญหาอะไรที่จะแก้? ทำไมถึงต้องมี? -->
+<!-- TODO: Describe the product vision — what problem does it solve? Why does it need to exist? -->
 
 ## Problem Statement
-<!-- TODO: อธิบายปัญหาที่ผู้ใช้เจอในปัจจุบัน -->
+<!-- TODO: Describe the current pain points users face -->
 
 ## Proposed Solution
-<!-- TODO: อธิบายวิธีแก้ปัญหาแบบ high-level -->
+<!-- TODO: Describe the high-level solution -->
 
 ---
 
@@ -21,8 +21,8 @@
 
 ## User Personas
 
-| # | Persona | รายละเอียด | Pain Points |
-|---|---------|-----------|-------------|
+| # | Persona | Description | Pain Points |
+|---|---------|-------------|-------------|
 | 1 | <!-- TODO --> | | |
 | 2 | <!-- TODO --> | | |
 | 3 | <!-- TODO --> | | |
@@ -31,8 +31,8 @@
 
 # 💡 KEY DIFFERENTIATORS (USPs)
 
-| # | USP | รายละเอียด |
-|---|-----|-----------|
+| # | USP | Description |
+|---|-----|-------------|
 | 1 | <!-- TODO --> | |
 | 2 | <!-- TODO --> | |
 | 3 | <!-- TODO --> | |
@@ -45,23 +45,23 @@
 
 ## Must-Have (P0)
 
-| # | Feature | รายละเอียด | Acceptance Criteria |
-|---|---------|-----------|-------------------|
+| # | Feature | Description | Acceptance Criteria |
+|---|---------|-------------|-------------------|
 | 1 | <!-- TODO --> | | |
 | 2 | <!-- TODO --> | | |
 | 3 | <!-- TODO --> | | |
 
 ## Should-Have (P1)
 
-| # | Feature | รายละเอียด |
-|---|---------|-----------|
+| # | Feature | Description |
+|---|---------|-------------|
 | 1 | <!-- TODO --> | |
 | 2 | <!-- TODO --> | |
 
 ## Nice-to-Have (P2)
 
-| # | Feature | รายละเอียด |
-|---|---------|-----------|
+| # | Feature | Description |
+|---|---------|-------------|
 | 1 | <!-- TODO --> | |
 | 2 | <!-- TODO --> | |
 
@@ -69,8 +69,8 @@
 
 # 📊 SUCCESS METRICS & KPIs
 
-| # | Metric | Target | วิธีวัด |
-|---|--------|--------|--------|
+| # | Metric | Target | How to Measure |
+|---|--------|--------|---------------|
 | 1 | <!-- TODO --> | | |
 | 2 | <!-- TODO --> | | |
 | 3 | <!-- TODO --> | | |
@@ -80,10 +80,10 @@
 # ⚠️ CONSTRAINTS & ASSUMPTIONS
 
 ## Constraints
-<!-- TODO: ข้อจำกัดด้านเทคนิค, เวลา, งบประมาณ -->
+<!-- TODO: Technical, time, and budget constraints -->
 
 ## Assumptions
-<!-- TODO: สมมติฐานที่ใช้ในการออกแบบ -->
+<!-- TODO: Design assumptions -->
 
 ## Risks
 
@@ -96,8 +96,8 @@
 
 # 📅 TIMELINE
 
-| Phase | ระยะเวลา | Deliverables |
-|-------|---------|-------------|
+| Phase | Duration | Deliverables |
+|-------|----------|-------------|
 | Phase 1 — MVP | <!-- TODO --> | |
 | Phase 2 — Enhancement | <!-- TODO --> | |
 | Phase 3 — Scale | <!-- TODO --> | |

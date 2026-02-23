@@ -16,7 +16,7 @@ export const projectTypes = [
   {
     value: 'fullstack',
     name: 'Web App (Full-stack)',
-    description: 'เว็บแอปทั่วไป — Frontend + Backend + Database',
+    description: 'General web app — Frontend + Backend + Database',
     defaultOptionalSpecs: ['05-API-DESIGN.md', '06-USER-STORIES.md', '07-ROADMAP.md', '08-SITEMAP.md'],
     hints: {
       TECH_HINT: 'Next.js / Nuxt + Node.js API + PostgreSQL',
@@ -42,14 +42,14 @@ export const projectTypes = [
 | expires_at | TIMESTAMP | NOT NULL | |
 | created_at | TIMESTAMP | DEFAULT NOW() | |`,
       FEATURES_HINT: 'Authentication, Dashboard, CRUD operations, User management',
-      API_HINT: 'REST API พร้อม JWT Auth — users, resources CRUD',
+      API_HINT: 'REST API with JWT Auth — users, resources CRUD',
       PAGES_HINT: `Home, Login, Register, Dashboard, Profile, Settings`,
     },
   },
   {
     value: 'api',
     name: 'API / Backend Service',
-    description: 'API-only — ไม่มี frontend, เน้น endpoints + database',
+    description: 'API-only — no frontend, focused on endpoints + database',
     defaultOptionalSpecs: ['05-API-DESIGN.md', '07-ROADMAP.md'],
     hints: {
       TECH_HINT: 'Node.js (Express/Fastify/Hono) + PostgreSQL + Redis',
@@ -59,7 +59,7 @@ export const projectTypes = [
 |--------|------|------------|-------------|
 | id | UUID | PK | |
 | email | VARCHAR(255) | UNIQUE, NOT NULL | |
-| api_key | VARCHAR(255) | UNIQUE | สำหรับ API authentication |
+| api_key | VARCHAR(255) | UNIQUE | For API authentication |
 | created_at | TIMESTAMP | DEFAULT NOW() | |
 
 ## Table: \`api_logs\`
@@ -81,7 +81,7 @@ export const projectTypes = [
   {
     value: 'ecommerce',
     name: 'E-commerce / Marketplace',
-    description: 'ร้านค้าออนไลน์ — Products, Orders, Payments, Cart',
+    description: 'Online store — Products, Orders, Payments, Cart',
     defaultOptionalSpecs: ['05-API-DESIGN.md', '06-USER-STORIES.md', '07-ROADMAP.md', '08-SITEMAP.md'],
     hints: {
       TECH_HINT: 'Next.js + Node.js API + PostgreSQL + Stripe/Payment Gateway',
@@ -93,7 +93,7 @@ export const projectTypes = [
 | email | VARCHAR(255) | UNIQUE, NOT NULL | |
 | name | VARCHAR(255) | NOT NULL | |
 | phone | VARCHAR(20) | | |
-| address | JSONB | | ที่อยู่จัดส่ง |
+| address | JSONB | | Shipping address |
 | created_at | TIMESTAMP | DEFAULT NOW() | |
 
 ## Table: \`products\`
@@ -101,13 +101,13 @@ export const projectTypes = [
 | Column | Type | Constraints | Description |
 |--------|------|------------|-------------|
 | id | UUID | PK | |
-| name | VARCHAR(255) | NOT NULL | ชื่อสินค้า |
+| name | VARCHAR(255) | NOT NULL | Product name |
 | slug | VARCHAR(255) | UNIQUE | URL-friendly name |
-| description | TEXT | | รายละเอียดสินค้า |
-| price | DECIMAL(10,2) | NOT NULL | ราคา |
-| stock | INT | DEFAULT 0 | จำนวนคงเหลือ |
+| description | TEXT | | Product description |
+| price | DECIMAL(10,2) | NOT NULL | Price |
+| stock | INT | DEFAULT 0 | Stock quantity |
 | category_id | UUID | FK → categories.id | |
-| images | JSONB | | รูปสินค้า |
+| images | JSONB | | Product images |
 | is_active | BOOLEAN | DEFAULT true | |
 | created_at | TIMESTAMP | DEFAULT NOW() | |
 
@@ -118,8 +118,8 @@ export const projectTypes = [
 | id | UUID | PK | |
 | user_id | UUID | FK → users.id | |
 | status | ENUM | DEFAULT 'pending' | pending, paid, shipped, delivered, cancelled |
-| total | DECIMAL(10,2) | NOT NULL | ยอดรวม |
-| shipping_address | JSONB | NOT NULL | ที่อยู่จัดส่ง |
+| total | DECIMAL(10,2) | NOT NULL | Order total |
+| shipping_address | JSONB | NOT NULL | Shipping address |
 | payment_method | VARCHAR(50) | | |
 | paid_at | TIMESTAMP | | |
 | created_at | TIMESTAMP | DEFAULT NOW() | |
@@ -132,7 +132,7 @@ export const projectTypes = [
 | order_id | UUID | FK → orders.id | |
 | product_id | UUID | FK → products.id | |
 | quantity | INT | NOT NULL | |
-| price | DECIMAL(10,2) | NOT NULL | ราคาตอนสั่ง |
+| price | DECIMAL(10,2) | NOT NULL | Price at order time |
 
 ## Table: \`categories\`
 
@@ -141,7 +141,7 @@ export const projectTypes = [
 | id | UUID | PK | |
 | name | VARCHAR(255) | NOT NULL | |
 | slug | VARCHAR(255) | UNIQUE | |
-| parent_id | UUID | FK → categories.id, NULLABLE | หมวดหมู่แม่ |`,
+| parent_id | UUID | FK → categories.id, NULLABLE | Parent category |`,
       FEATURES_HINT: 'Product Catalog, Shopping Cart, Checkout, Payment, Order Tracking, Admin Panel',
       API_HINT: 'REST API — products, cart, orders, payments, categories, reviews',
       PAGES_HINT: 'Home, Products, Product Detail, Cart, Checkout, Order History, Admin Dashboard',
@@ -159,7 +159,7 @@ export const projectTypes = [
 | Column | Type | Constraints | Description |
 |--------|------|------------|-------------|
 | id | UUID | PK | |
-| name | VARCHAR(255) | NOT NULL | ชื่อองค์กร |
+| name | VARCHAR(255) | NOT NULL | Organization name |
 | slug | VARCHAR(255) | UNIQUE | URL-friendly name |
 | plan | ENUM | DEFAULT 'free' | free, pro, enterprise |
 | stripe_customer_id | VARCHAR(255) | | |
@@ -208,7 +208,7 @@ export const projectTypes = [
   {
     value: 'mobile',
     name: 'Mobile App',
-    description: 'แอปมือถือ — React Native / Flutter + Backend API',
+    description: 'Mobile app — React Native / Flutter + Backend API',
     defaultOptionalSpecs: ['05-API-DESIGN.md', '06-USER-STORIES.md', '07-ROADMAP.md'],
     hints: {
       TECH_HINT: 'React Native (Expo) / Flutter + Node.js API + PostgreSQL',
@@ -220,7 +220,7 @@ export const projectTypes = [
 | email | VARCHAR(255) | UNIQUE, NOT NULL | |
 | name | VARCHAR(255) | NOT NULL | |
 | avatar_url | VARCHAR(500) | | |
-| push_token | VARCHAR(500) | | สำหรับ push notification |
+| push_token | VARCHAR(500) | | For push notifications |
 | platform | ENUM | | ios, android |
 | created_at | TIMESTAMP | DEFAULT NOW() | |
 
@@ -236,14 +236,14 @@ export const projectTypes = [
 | last_active_at | TIMESTAMP | | |
 | created_at | TIMESTAMP | DEFAULT NOW() | |`,
       FEATURES_HINT: 'Authentication, Push Notifications, Offline Support, Profile, Settings',
-      API_HINT: 'REST API สำหรับ mobile — auth, push notifications, sync, media upload',
+      API_HINT: 'REST API for mobile — auth, push notifications, sync, media upload',
       PAGES_HINT: 'Splash, Login, Home (Tab), Profile, Settings, Notifications',
     },
   },
   {
     value: 'landing',
     name: 'Landing Page / Marketing Site',
-    description: 'เว็บโปรโมท — ไม่มี backend หนัก, เน้น content + SEO',
+    description: 'Marketing site — lightweight backend, content + SEO focused',
     defaultOptionalSpecs: ['07-ROADMAP.md', '08-SITEMAP.md'],
     hints: {
       TECH_HINT: 'Next.js / Astro + Tailwind CSS + CMS (Contentful/Sanity)',
@@ -255,7 +255,7 @@ export const projectTypes = [
 | name | VARCHAR(255) | NOT NULL | |
 | email | VARCHAR(255) | NOT NULL | |
 | message | TEXT | | |
-| source | VARCHAR(100) | | หน้าที่ส่งมา |
+| source | VARCHAR(100) | | Source page |
 | created_at | TIMESTAMP | DEFAULT NOW() | |
 
 ## Table: \`subscribers\`
@@ -274,7 +274,7 @@ export const projectTypes = [
   {
     value: 'internal',
     name: 'Internal Tool / Admin Dashboard',
-    description: 'ระบบหลังบ้าน — CRUD, Reports, User Management',
+    description: 'Back-office system — CRUD, Reports, User Management',
     defaultOptionalSpecs: ['05-API-DESIGN.md', '06-USER-STORIES.md', '07-ROADMAP.md'],
     hints: {
       TECH_HINT: 'Next.js / Refine / AdminJS + Node.js + PostgreSQL',
@@ -286,7 +286,7 @@ export const projectTypes = [
 | email | VARCHAR(255) | UNIQUE, NOT NULL | |
 | name | VARCHAR(255) | NOT NULL | |
 | role | ENUM | DEFAULT 'viewer' | super_admin, admin, editor, viewer |
-| department | VARCHAR(100) | | แผนก |
+| department | VARCHAR(100) | | Department |
 | is_active | BOOLEAN | DEFAULT true | |
 | last_login_at | TIMESTAMP | | |
 | created_at | TIMESTAMP | DEFAULT NOW() | |
@@ -298,9 +298,9 @@ export const projectTypes = [
 | id | UUID | PK | |
 | user_id | UUID | FK → users.id | |
 | action | VARCHAR(50) | NOT NULL | create, update, delete |
-| resource | VARCHAR(100) | NOT NULL | ชื่อ resource ที่แก้ไข |
+| resource | VARCHAR(100) | NOT NULL | Modified resource name |
 | resource_id | UUID | | |
-| changes | JSONB | | ข้อมูลที่เปลี่ยน |
+| changes | JSONB | | Changed data |
 | ip_address | VARCHAR(45) | | |
 | created_at | TIMESTAMP | DEFAULT NOW() | |`,
       FEATURES_HINT: 'CRUD Management, Reports, Role-based Access, Audit Logs, Data Export',

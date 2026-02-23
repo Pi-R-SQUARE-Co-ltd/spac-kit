@@ -9,7 +9,7 @@
 # 📌 OVERVIEW
 
 ## Total Pages
-<!-- TODO: ระบุจำนวนหน้า -->
+<!-- TODO: Define total page count -->
 
 ## Navigation Style
 <!-- TODO: e.g. Top navbar + sidebar -->
@@ -18,22 +18,22 @@
 
 # 🏠 SITEMAP TREE
 
-<!-- TODO: วาด sitemap tree -->
+<!-- TODO: Draw sitemap tree -->
 
 ---
 
 # 📋 PAGE DETAILS
 
-<!-- TODO: ระบุรายละเอียดแต่ละหน้า -->
+<!-- TODO: Define details for each page -->
 
 ---
 
 # 🧭 NAVIGATION
 
-<!-- TODO: ระบุ primary/secondary navigation -->
+<!-- TODO: Define primary/secondary navigation -->
 
 ---
 
 # 🔒 ACCESS CONTROL
 
-<!-- TODO: ระบุ roles และหน้าที่เข้าถึงได้ -->
+<!-- TODO: Define roles and accessible pages -->

@@ -23,7 +23,7 @@ Prisma 6
 # 📊 ENTITY RELATIONSHIP DIAGRAM
 
 ```
-<!-- TODO: วาด ER Diagram -->
+<!-- TODO: Draw ER Diagram -->
 ```
 
 ---
@@ -36,22 +36,22 @@ Prisma 6
 
 # 🔗 RELATIONS
 
-<!-- TODO: ระบุ relations ระหว่าง tables -->
+<!-- TODO: Define relations between tables -->
 
 ---
 
 # 📑 INDEXES
 
-<!-- TODO: ระบุ indexes ที่ต้องการ -->
+<!-- TODO: Define indexes -->
 
 ---
 
 # 🏷 ENUMS
 
-<!-- TODO: ระบุ enums ที่ใช้ -->
+<!-- TODO: Define enums -->
 
 ---
 
 # 🌱 SEED DATA
 
-<!-- TODO: ระบุ seed data สำหรับ development -->
+<!-- TODO: Define seed data for development -->

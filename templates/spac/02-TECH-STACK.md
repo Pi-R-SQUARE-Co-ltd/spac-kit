@@ -8,10 +8,10 @@
 
 # 🎨 FRONTEND
 
-| Item | Technology | เหตุผลที่เลือก |
-|------|-----------|--------------|
+| Item | Technology | Why |
+|------|-----------|-----|
 | Framework | Next.js 15 (App Router) | Full-stack React, SSR/SSG, Server Components |
-| Language | TypeScript 5.7 | Type safety, DX |
+| Language | TypeScript 5.7 | Type safety, better DX |
 | Styling | Tailwind CSS 4 | Utility-first, rapid prototyping |
 | UI Components | Shadcn/UI (Radix UI) | Accessible, customizable, copy-paste |
 | State Management | Zustand | Lightweight, simple API |
@@ -19,14 +19,14 @@
 | Forms | React Hook Form + Zod | Performant forms + schema validation |
 | i18n | next-intl | Multi-language support |
 
-<!-- TODO: ปรับตาม stack จริงของโปรเจค -->
+<!-- TODO: Adjust based on your actual stack -->
 
 ---
 
 # ⚙️ BACKEND
 
-| Item | Technology | เหตุผลที่เลือก |
-|------|-----------|--------------|
+| Item | Technology | Why |
+|------|-----------|-----|
 | Runtime | Node.js 22+ | LTS, stable |
 | Framework | NestJS 11 | Modular, scalable, enterprise-ready |
 | API Style | REST | Standard, easy to consume |
@@ -34,25 +34,25 @@
 | Validation | Class Validator + Zod | DTO validation |
 | Email | Resend | Developer-friendly email API |
 
-<!-- TODO: ปรับตาม stack จริงของโปรเจค -->
+<!-- TODO: Adjust based on your actual stack -->
 
 ---
 
 # 🗄 DATABASE
 
-| Item | Technology | เหตุผลที่เลือก |
-|------|-----------|--------------|
+| Item | Technology | Why |
+|------|-----------|-----|
 | Primary DB | PostgreSQL 17 | Reliable, feature-rich, extensions |
 | ORM | Prisma 6 | Type-safe queries, migrations, studio |
 | Cache | Redis 7 | Fast caching, session, queue |
-| File Storage | Cloudflare R2 (S3-compatible) | ราคาถูก, ไม่มี egress fee |
+| File Storage | Cloudflare R2 (S3-compatible) | Affordable, no egress fees |
 
 ---
 
 # 🏗 INFRASTRUCTURE & HOSTING
 
-| Item | Technology | เหตุผลที่เลือก |
-|------|-----------|--------------|
+| Item | Technology | Why |
+|------|-----------|-----|
 | Hosting | Vercel (Frontend) + Railway/AWS (Backend) | <!-- TODO --> |
 | CI/CD | GitHub Actions | <!-- TODO --> |
 | Containerization | Docker Compose | PostgreSQL + Redis local dev |

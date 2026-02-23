@@ -18,9 +18,9 @@
 │   ├── web/                          # 🌐 Frontend (Next.js 15 — port 3000)
 │   │   ├── src/
 │   │   │   ├── app/                  # App Router — pages & layouts
-│   │   │   │   ├── (public)/         # หน้าสาธารณะ
+│   │   │   │   ├── (public)/         # Public pages
 │   │   │   │   ├── (auth)/           # Login, Register
-│   │   │   │   └── (dashboard)/      # หน้า authenticated
+│   │   │   │   └── (dashboard)/      # Authenticated pages
 │   │   │   ├── components/
 │   │   │   │   ├── ui/               # Shadcn/UI components
 │   │   │   │   ├── layout/           # Header, Footer, Sidebar
@@ -40,7 +40,7 @@
 │   │   │   ├── modules/              # Feature modules
 │   │   │   │   ├── auth/             # Authentication (JWT + OAuth)
 │   │   │   │   ├── users/            # User management
-│   │   │   │   └── ...               # แต่ละ module มี controller, service, dto, module
+│   │   │   │   └── ...               # Each module has controller, service, dto, module
 │   │   │   ├── common/               # Guards, Decorators, Filters, Interceptors
 │   │   │   ├── config/               # App & DB configuration
 │   │   │   └── main.ts               # Entry point
@@ -51,7 +51,7 @@
 │       ├── src/
 │       │   ├── app/
 │       │   ├── components/
-│       │   └── ...                   # โครงสร้างคล้าย web
+│       │   └── ...                   # Same structure as web
 │       └── package.json
 │
 ├── packages/
@@ -80,7 +80,7 @@
 └── README.md
 ```
 
-<!-- TODO: ปรับโครงสร้างตามโปรเจคจริง -->
+<!-- TODO: Adjust structure based on your actual project -->
 
 ---
 
@@ -110,7 +110,7 @@
 |------|---------|
 | `turbo.json` | Turborepo pipeline config |
 | `pnpm-workspace.yaml` | pnpm workspace definition |
-| `docker-compose.yml` | PostgreSQL + Redis สำหรับ local dev |
+| `docker-compose.yml` | PostgreSQL + Redis for local dev |
 | `.env.example` | Environment variables template |
 | `eslint.config.mjs` | Root ESLint config |
 
@@ -136,14 +136,14 @@
 | `JWT_SECRET` | JWT signing secret | Yes |
 | `PORT` | API port | Yes |
 | `FRONTEND_URL` | Frontend URL (CORS) | Yes |
-<!-- TODO: เพิ่ม env ตามต้องการ -->
+<!-- TODO: Add more env variables as needed -->
 
 ## `apps/web/.env.local` (Frontend)
 
 | Variable | Description | Required |
 |----------|-------------|----------|
 | `NEXT_PUBLIC_API_URL` | Backend API URL | Yes |
-<!-- TODO: เพิ่ม env ตามต้องการ -->
+<!-- TODO: Add more env variables as needed -->
 
 ---
 
@@ -151,11 +151,11 @@
 
 | Script | Command | Description |
 |--------|---------|-------------|
-| Dev (all) | `pnpm dev` | รัน web + api + admin พร้อมกัน |
-| Dev (web) | `pnpm dev:web` | รันเฉพาะ frontend |
-| Dev (api) | `pnpm dev:api` | รันเฉพาะ backend |
-| Build | `pnpm build` | Build ทั้งหมด |
-| Lint | `pnpm lint` | Lint ทั้งหมด |
+| Dev (all) | `pnpm dev` | Run web + api + admin simultaneously |
+| Dev (web) | `pnpm dev:web` | Run frontend only |
+| Dev (api) | `pnpm dev:api` | Run backend only |
+| Build | `pnpm build` | Build all apps |
+| Lint | `pnpm lint` | Lint all apps |
 | Format | `pnpm format` | Prettier format |
 | Type Check | `pnpm type-check` | TypeScript check |
 | DB Up | `pnpm db:up` | Start Docker (PostgreSQL + Redis) |

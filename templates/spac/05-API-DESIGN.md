@@ -21,22 +21,22 @@
 
 # 🔐 AUTHENTICATION
 
-<!-- TODO: อธิบาย auth flow และ endpoints -->
+<!-- TODO: Describe auth flow and endpoints -->
 
 ---
 
 # 📡 ENDPOINTS
 
-<!-- TODO: ระบุ endpoints แยกตาม resource -->
+<!-- TODO: Define endpoints by resource -->
 
 ---
 
 # ❌ ERROR HANDLING
 
-<!-- TODO: ระบุ error format และ error codes -->
+<!-- TODO: Define error format and error codes -->
 
 ---
 
 # 📏 RATE LIMITING
 
-<!-- TODO: ระบุ rate limit ต่อ tier -->
+<!-- TODO: Define rate limits per tier -->
