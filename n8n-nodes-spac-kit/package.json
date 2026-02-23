@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-spac-kit-pirsquare",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "n8n community node for SPAC-KIT — Spec-Driven Development Kit",
   "keywords": [
     "n8n-community-node-package",
@@ -11,8 +11,15 @@
   "license": "MIT",
   "author": {
     "name": "Pi R Square Co., LTD",
-    "email": "auto@pirsquare.net"
+    "email": "auto@pirsquare.net",
+    "url": "https://github.com/Pi-R-SQUARE-Co-ltd"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pi-R-SQUARE-Co-ltd/spac-kit.git",
+    "directory": "n8n-nodes-spac-kit"
+  },
+  "homepage": "https://github.com/Pi-R-SQUARE-Co-ltd/spac-kit/tree/main/n8n-nodes-spac-kit",
   "main": "index.js",
   "scripts": {
     "build": "tsc && cp nodes/SpacKit/pirsquare.png dist/nodes/SpacKit/pirsquare.png",
@@ -34,6 +41,9 @@
   "dependencies": {
     "@pirsquare.auto/spac-kit": "^2.0.0"
   },
+  "bundledDependencies": [
+    "@pirsquare.auto/spac-kit"
+  ],
   "devDependencies": {
     "n8n-workflow": "^1.0.0",
     "typescript": "^5.7.0"
