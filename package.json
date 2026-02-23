@@ -1,0 +1,32 @@
+{
+  "name": "@pirsquare/spac-kit",
+  "version": "1.0.0",
+  "description": "Spec-Driven Development Kit — สร้าง spec templates สำหรับเริ่มต้นโปรเจค",
+  "type": "module",
+  "main": "src/init.js",
+  "bin": {
+    "spac-kit": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "templates/"
+  ],
+  "scripts": {
+    "test": "node bin/cli.js init test-project"
+  },
+  "keywords": [
+    "spec",
+    "template",
+    "project-init",
+    "cli",
+    "spec-driven"
+  ],
+  "author": "Pi R Square Co., LTD",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^9.2.0"
+  }
+}

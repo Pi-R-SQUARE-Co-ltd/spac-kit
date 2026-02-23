@@ -1,0 +1,123 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs-extra';
+import { requiredSpecs, optionalSpecs } from './specs.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const TEMPLATES_DIR = path.join(__dirname, '..', 'templates', 'spac');
+
+export async function initProject(projectName, selectedOptionalFiles, preset) {
+  const projectDir = path.resolve(process.cwd(), projectName);
+  const spacDir = path.join(projectDir, 'spac');
+
+  await fs.ensureDir(spacDir);
+
+  const today = new Date().toISOString().split('T')[0];
+  const hints = preset ? preset.hints : {};
+
+  // Copy required specs
+  for (const spec of requiredSpecs) {
+    await copyTemplate(spec.file, spacDir, projectName, today, hints);
+  }
+
+  // Copy selected optional specs
+  const optionalFiles = selectedOptionalFiles || optionalSpecs.map((s) => s.file);
+  for (const file of optionalFiles) {
+    await copyTemplate(file, spacDir, projectName, today, hints);
+  }
+
+  // สร้าง AI-CONTEXT.md ใน spac/
+  const allSpecFiles = [
+    ...requiredSpecs.map((s) => s.file),
+    ...optionalFiles,
+  ];
+  await generateScopeOfWork(spacDir, projectName, preset, allSpecFiles);
+
+  return { projectDir, spacDir };
+}
+
+async function copyTemplate(fileName, destDir, projectName, date, hints) {
+  const srcPath = path.join(TEMPLATES_DIR, fileName);
+  const destPath = path.join(destDir, fileName);
+
+  let content = await fs.readFile(srcPath, 'utf-8');
+  content = content.replaceAll('{{PROJECT_NAME}}', projectName);
+  content = content.replaceAll('{{DATE}}', date);
+
+  // Replace preset hints
+  for (const [key, value] of Object.entries(hints)) {
+    content = content.replaceAll(`{{${key}}}`, value);
+  }
+
+  // Clear any remaining unreplaced hint placeholders
+  content = content.replace(/\{\{[A-Z_]+_HINT\}\}/g, '<!-- TODO -->');
+
+  await fs.writeFile(destPath, content, 'utf-8');
+}
+
+async function generateScopeOfWork(spacDir, projectName, preset, specFiles) {
+  const specList = specFiles.map((f) => `| \`${f}\` | |`).join('\n');
+  const presetLabel = preset ? preset.name : 'General';
+  const today = new Date().toISOString().split('T')[0];
+
+  const content = `# 📑 ${projectName} — Scope of Work (SOW)
+
+## Project Type: ${presetLabel}
+## Date: ${today}
+## Prepared by: Pi R Square Co., LTD
+
+---
+
+# 1. Project Overview
+
+<!-- TODO: อธิบายภาพรวมของโปรเจค 2-3 ประโยค -->
+
+---
+
+# 2. Specification Documents
+
+เอกสารประกอบโปรเจคทั้งหมดอยู่ในโฟลเดอร์นี้ ให้อ่านตามลำดับก่อนเริ่มงาน
+
+### ลำดับการอ่าน
+
+| ลำดับ | ไฟล์ | วัตถุประสงค์ |
+|-------|------|-------------|
+| 1 | \`01-PRD.md\` | เข้าใจว่าโปรเจคนี้คืออะไร เป้าหมายและขอบเขตงาน |
+| 2 | \`02-TECH-STACK.md\` | เทคโนโลยีที่ใช้ ต้อง follow ตามนี้ |
+| 3 | \`03-DATABASE-SCHEMA.md\` | โครงสร้าง database, tables, relations |
+| 4 | \`04-PROJECT-STRUCTURE.md\` | โครงสร้างโฟลเดอร์และไฟล์ |
+
+### Spec Files ทั้งหมด
+
+| ไฟล์ | สถานะ |
+|------|-------|
+${specList}
+
+---
+
+# 3. Constraints & Rules
+
+- ใช้ tech stack ตามที่ระบุใน \`02-TECH-STACK.md\` เท่านั้น — ห้ามเปลี่ยนโดยไม่ได้รับอนุมัติ
+- โครงสร้าง database ต้องเป็นไปตาม \`03-DATABASE-SCHEMA.md\` — ห้ามแก้ไขโดยไม่ได้รับอนุมัติ
+- สร้างไฟล์และโฟลเดอร์ตามโครงสร้างใน \`04-PROJECT-STRUCTURE.md\`
+- เมื่อมีการเปลี่ยนแปลง ต้องอัปเดต spec file ที่เกี่ยวข้องให้เป็นปัจจุบัน
+
+---
+
+# 4. How to Use with AI Tools
+
+| AI Tool | วิธีใช้ |
+|---------|--------|
+| **Claude Code** | คัดลอกเนื้อหาไฟล์นี้ไปใส่ \`CLAUDE.md\` ที่ root ของโปรเจค |
+| **ChatGPT** | คัดลอก spec files ทั้งหมดวางเป็น context ก่อนเริ่มสั่งงาน |
+| **Cursor / AI IDE** | เพิ่มโฟลเดอร์ \`spac/\` เป็น context files ในการตั้งค่า |
+| **Other AI** | ส่งไฟล์นี้พร้อม spec files ที่เกี่ยวข้องเป็น reference |
+
+---
+
+*Generated by [@pirsquare/spac-kit](https://github.com/pirsquare/spac-kit-pirsquare) — Spec-Driven Development by Pi R Square Co., LTD*
+`;
+
+  await fs.writeFile(path.join(spacDir, '00-SCOPE-OF-WORK.md'), content, 'utf-8');
+}
