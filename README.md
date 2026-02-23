@@ -150,6 +150,118 @@ When you select a project type, templates are customized with relevant defaults 
 
 ---
 
+## v2.0 — New Features
+
+### MCP Server (for AI Tools)
+
+spac-kit includes a built-in MCP server that lets AI tools like Claude Code and Cursor call spac-kit directly.
+
+**Setup for Claude Code** — add to `~/.claude.json`:
+
+```json
+{
+  "mcpServers": {
+    "spac-kit": {
+      "command": "npx",
+      "args": ["-y", "-p", "@pirsquare.auto/spac-kit", "spac-kit-mcp"]
+    }
+  }
+}
+```
+
+**Setup for Cursor** — add to `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "spac-kit": {
+      "command": "npx",
+      "args": ["-y", "-p", "@pirsquare.auto/spac-kit", "spac-kit-mcp"]
+    }
+  }
+}
+```
+
+Then just tell the AI what you need:
+
+> "Create specs for an e-commerce project called shopee-clone"
+
+Available MCP tools:
+
+| Tool | Description |
+|------|-------------|
+| `list_presets` | List all project type presets |
+| `create_project` | Create a project with spec templates |
+| `read_spec` | Read a specific spec file |
+| `get_latest_versions` | Get latest npm package versions |
+| `fill_specs` | AI auto-fill spec templates |
+
+---
+
+### AI Auto-Fill (`spac-kit fill`)
+
+Let Claude AI fill in your spec templates automatically based on a project description.
+
+```bash
+# Set your API key
+export ANTHROPIC_API_KEY=sk-ant-xxx
+
+# Auto-fill all specs with TODO markers
+spac-kit fill --description "Meeting room booking system for offices"
+
+# Specify directory
+spac-kit fill --dir ./my-project/spac --description "E-commerce for clothing"
+```
+
+Each spec file gets a specialized AI persona:
+- PRD → Product Manager
+- Database Schema → Database Architect  
+- API Design → API Designer
+- User Stories → Product Owner
+
+Requires `@anthropic-ai/sdk` (installed as optional dependency).
+
+---
+
+### Programmatic API
+
+Use spac-kit as a library in your own code:
+
+```js
+import { createProject, getPresets, readSpecFile } from '@pirsquare.auto/spac-kit';
+
+// Create a project
+const result = await createProject('my-app', {
+  preset: 'saas',
+  optionalSpecs: ['05-API-DESIGN.md', '06-USER-STORIES.md'],
+  overwrite: true,
+  targetDir: '/path/to/dir',
+});
+
+// List presets
+const presets = getPresets();
+
+// Read a spec file
+const content = await readSpecFile('./my-app/spac', '01-PRD.md');
+```
+
+---
+
+### n8n Node
+
+Use spac-kit in n8n workflow automation:
+
+```bash
+npm install n8n-nodes-spac-kit-pirsquare
+```
+
+Or install via n8n UI: **Settings → Community Nodes → Install → `n8n-nodes-spac-kit-pirsquare`**
+
+Operations: Create Project, Get Presets, Get Versions.
+
+
+---
+
 ## License
 
 MIT — Pi R Square Co., LTD
