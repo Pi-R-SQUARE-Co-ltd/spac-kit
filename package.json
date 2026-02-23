@@ -1,11 +1,18 @@
 {
   "name": "@pirsquare.auto/spac-kit",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "Spec-Driven Development Kit — Generate spec templates for any project in seconds",
   "type": "module",
-  "main": "src/init.js",
+  "main": "src/core.js",
+  "exports": {
+    ".": "./src/core.js",
+    "./core": "./src/core.js",
+    "./specs": "./src/specs.js",
+    "./versions": "./src/versions.js"
+  },
   "bin": {
-    "spac-kit": "./bin/cli.js"
+    "spac-kit": "./bin/cli.js",
+    "spac-kit-mcp": "./bin/mcp-server.js"
   },
   "files": [
     "bin/",
@@ -21,7 +28,9 @@
     "template",
     "project-init",
     "cli",
-    "spec-driven"
+    "spec-driven",
+    "mcp",
+    "ai"
   ],
   "author": "Pi R Square Co., LTD",
   "license": "MIT",
@@ -37,8 +46,13 @@
   },
   "homepage": "https://github.com/Pi-R-SQUARE-Co-ltd/spac-kit#readme",
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
     "chalk": "^5.3.0",
     "fs-extra": "^11.2.0",
-    "inquirer": "^9.2.0"
+    "inquirer": "^9.2.0",
+    "zod": "^3.24.0"
+  },
+  "optionalDependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
   }
 }

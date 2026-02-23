@@ -1,15 +1,18 @@
-name: Publish to npm
+name: Publish n8n Node to npm
 
 on:
   push:
     tags:
-      - 'v*'
+      - 'n8n-v*'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    defaults:
+      run:
+        working-directory: n8n-nodes-spac-kit
     steps:
       - uses: actions/checkout@v4
 
@@ -18,9 +21,9 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
-      - run: npm ci
+      - run: npm install
 
-      - run: npm test
+      - run: npm run build
 
       - run: npm publish --access public
         env:
