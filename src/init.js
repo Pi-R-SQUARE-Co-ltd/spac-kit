@@ -11,6 +11,10 @@ export async function initProject(projectName, selectedOptionalFiles, preset) {
   const projectDir = path.resolve(process.cwd(), projectName);
   const spacDir = path.join(projectDir, 'spac');
 
+  if (await fs.pathExists(spacDir)) {
+    throw new Error(`Directory "${projectName}/spac" already exists. Use a different name or remove it first.`);
+  }
+
   await fs.ensureDir(spacDir);
 
   const today = new Date().toISOString().split('T')[0];

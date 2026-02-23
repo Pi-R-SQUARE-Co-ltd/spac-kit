@@ -10,9 +10,11 @@ export async function askProjectName(defaultName) {
       name: 'projectName',
       message: 'Project name:',
       validate: (input) => {
-        if (!input.trim()) return 'Please enter a project name';
-        if (!/^[a-zA-Z0-9_-]+$/.test(input.trim())) {
-          return 'Project name can only contain a-z, 0-9, - and _';
+        const name = input.trim();
+        if (!name) return 'Please enter a project name';
+        if (name.length > 100) return 'Project name is too long (max 100 characters)';
+        if (!/^[a-z0-9][a-z0-9_-]*$/.test(name)) {
+          return 'Project name must start with a-z or 0-9, and contain only a-z, 0-9, - and _ (lowercase)';
         }
         return true;
       },

@@ -1,6 +1,6 @@
 {
   "name": "@pirsquare.auto/spac-kit",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Spec-Driven Development Kit — Generate spec templates for any project in seconds",
   "type": "module",
   "main": "src/init.js",
@@ -10,10 +10,11 @@
   "files": [
     "bin/",
     "src/",
-    "templates/"
+    "templates/",
+    "LICENSE"
   ],
   "scripts": {
-    "test": "node bin/cli.js init test-project"
+    "test": "node bin/cli.js --help"
   },
   "keywords": [
     "spec",
@@ -24,6 +25,17 @@
   ],
   "author": "Pi R Square Co., LTD",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pi-R-SQUARE-Co-ltd/spac-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Pi-R-SQUARE-Co-ltd/spac-kit/issues"
+  },
+  "homepage": "https://github.com/Pi-R-SQUARE-Co-ltd/spac-kit#readme",
   "dependencies": {
     "chalk": "^5.3.0",
     "fs-extra": "^11.2.0",
