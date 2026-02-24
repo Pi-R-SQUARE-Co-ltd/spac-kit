@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-spac-kit-pirsquare",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "n8n community node for SPAC-KIT — Spec-Driven Development Kit",
   "keywords": [
     "n8n-community-node-package",

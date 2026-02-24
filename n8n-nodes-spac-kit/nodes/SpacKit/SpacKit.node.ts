@@ -4,16 +4,85 @@ import type {
   INodeType,
   INodeTypeDescription,
 } from 'n8n-workflow';
-import { exec } from 'child_process';
-import { promisify } from 'util';
 
-const execAsync = promisify(exec);
+// Inlined spec data (no external dependencies)
+const requiredSpecs = [
+  { file: '01-PRD.md', name: 'Product Requirements Document (PRD)' },
+  { file: '02-TECH-STACK.md', name: 'Tech Stack' },
+  { file: '03-DATABASE-SCHEMA.md', name: 'Database Schema' },
+  { file: '04-PROJECT-STRUCTURE.md', name: 'Project Structure' },
+];
 
-async function runSpacKit(args: string): Promise<string> {
-  const { stdout } = await execAsync(`npx -y @pirsquare.auto/spac-kit ${args}`, {
-    timeout: 60000,
-  });
-  return stdout.trim();
+const optionalSpecs = [
+  { file: '05-API-DESIGN.md', name: 'API Design' },
+  { file: '06-USER-STORIES.md', name: 'User Stories' },
+  { file: '07-ROADMAP.md', name: 'Roadmap' },
+  { file: '08-SITEMAP.md', name: 'Sitemap' },
+];
+
+const projectTypes = [
+  { value: 'fullstack', name: 'Web App (Full-stack)', description: 'General web app — Frontend + Backend + Database', defaultOptionalSpecs: ['05-API-DESIGN.md', '06-USER-STORIES.md', '07-ROADMAP.md', '08-SITEMAP.md'] },
+  { value: 'api', name: 'API / Backend Service', description: 'API-only — no frontend, focused on endpoints + database', defaultOptionalSpecs: ['05-API-DESIGN.md', '07-ROADMAP.md'] },
+  { value: 'ecommerce', name: 'E-commerce / Marketplace', description: 'Online store — Products, Orders, Payments, Cart', defaultOptionalSpecs: ['05-API-DESIGN.md', '06-USER-STORIES.md', '07-ROADMAP.md', '08-SITEMAP.md'] },
+  { value: 'saas', name: 'SaaS Platform', description: 'Multi-tenant SaaS — Subscription, Billing, Teams', defaultOptionalSpecs: ['05-API-DESIGN.md', '06-USER-STORIES.md', '07-ROADMAP.md', '08-SITEMAP.md'] },
+  { value: 'mobile', name: 'Mobile App', description: 'Mobile app — React Native / Flutter + Backend API', defaultOptionalSpecs: ['05-API-DESIGN.md', '06-USER-STORIES.md', '07-ROADMAP.md'] },
+  { value: 'landing', name: 'Landing Page / Marketing Site', description: 'Marketing site — lightweight backend, content + SEO focused', defaultOptionalSpecs: ['07-ROADMAP.md', '08-SITEMAP.md'] },
+  { value: 'internal', name: 'Internal Tool / Admin Dashboard', description: 'Back-office system — CRUD, Reports, User Management', defaultOptionalSpecs: ['05-API-DESIGN.md', '06-USER-STORIES.md', '07-ROADMAP.md'] },
+];
+
+const PACKAGES: Record<string, string> = {
+  VERSION_NEXTJS: 'next',
+  VERSION_TYPESCRIPT: 'typescript',
+  VERSION_TAILWIND: 'tailwindcss',
+  VERSION_SHADCN: 'shadcn',
+  VERSION_ZUSTAND: 'zustand',
+  VERSION_TANSTACK_QUERY: '@tanstack/react-query',
+  VERSION_REACT_HOOK_FORM: 'react-hook-form',
+  VERSION_ZOD: 'zod',
+  VERSION_NESTJS: '@nestjs/core',
+  VERSION_PRISMA: 'prisma',
+  VERSION_PNPM: 'pnpm',
+  VERSION_VITEST: 'vitest',
+  VERSION_PLAYWRIGHT: '@playwright/test',
+  VERSION_ESLINT: 'eslint',
+  VERSION_PRETTIER: 'prettier',
+};
+
+const FALLBACK_VERSIONS: Record<string, string> = {
+  VERSION_NEXTJS: '15', VERSION_TYPESCRIPT: '5.7', VERSION_TAILWIND: '4',
+  VERSION_SHADCN: '2', VERSION_ZUSTAND: '5', VERSION_TANSTACK_QUERY: '5',
+  VERSION_REACT_HOOK_FORM: '7', VERSION_ZOD: '3', VERSION_NESTJS: '11',
+  VERSION_PRISMA: '6', VERSION_PNPM: '9', VERSION_VITEST: '3',
+  VERSION_PLAYWRIGHT: '1', VERSION_ESLINT: '9', VERSION_PRETTIER: '3',
+  VERSION_NODE: '22', VERSION_POSTGRESQL: '17', VERSION_REDIS: '7',
+};
+
+async function fetchLatestVersions(): Promise<Record<string, string>> {
+  const versions = { ...FALLBACK_VERSIONS };
+  const USE_MINOR = new Set(['typescript', 'tailwindcss']);
+
+  const results = await Promise.allSettled(
+    Object.entries(PACKAGES).map(async ([key, pkg]) => {
+      const res = await fetch(`https://registry.npmjs.org/${pkg}/latest`, {
+        signal: AbortSignal.timeout(5000),
+      });
+      if (!res.ok) return [key, null] as const;
+      const data = await res.json() as { version: string };
+      const parts = data.version.split('.');
+      const ver = (parseInt(parts[0]) === 0 || USE_MINOR.has(pkg))
+        ? `${parts[0]}.${parts[1]}`
+        : parts[0];
+      return [key, ver] as const;
+    }),
+  );
+
+  for (const result of results) {
+    if (result.status === 'fulfilled' && result.value[1]) {
+      versions[result.value[0]] = result.value[1];
+    }
+  }
+
+  return versions;
 }
 
 export class SpacKit implements INodeType {
@@ -39,12 +108,6 @@ export class SpacKit implements INodeType {
         noDataExpression: true,
         options: [
           {
-            name: 'Create Project',
-            value: 'createProject',
-            description: 'Create a new project with spec templates',
-            action: 'Create a new project with spec templates',
-          },
-          {
             name: 'Get Presets',
             value: 'getPresets',
             description: 'List all available project type presets',
@@ -56,28 +119,20 @@ export class SpacKit implements INodeType {
             description: 'Fetch latest npm package versions',
             action: 'Fetch latest npm package versions',
           },
-        ],
-        default: 'createProject',
-      },
-      {
-        displayName: 'Project Name',
-        name: 'projectName',
-        type: 'string',
-        default: '',
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ['createProject'],
+          {
+            name: 'Get Spec List',
+            value: 'getSpecList',
+            description: 'Get all spec files for a preset',
+            action: 'Get all spec files for a preset',
           },
-        },
-        description: 'Name of the project (lowercase, a-z, 0-9, hyphens, underscores)',
+        ],
+        default: 'getPresets',
       },
       {
         displayName: 'Preset',
         name: 'preset',
         type: 'options',
         options: [
-          { name: 'General (No Preset)', value: '' },
           { name: 'Web App (Full-stack)', value: 'fullstack' },
           { name: 'API / Backend Service', value: 'api' },
           { name: 'E-commerce / Marketplace', value: 'ecommerce' },
@@ -89,52 +144,10 @@ export class SpacKit implements INodeType {
         default: 'fullstack',
         displayOptions: {
           show: {
-            operation: ['createProject'],
+            operation: ['getSpecList'],
           },
         },
         description: 'Project type preset',
-      },
-      {
-        displayName: 'Target Directory',
-        name: 'targetDir',
-        type: 'string',
-        default: '/tmp',
-        displayOptions: {
-          show: {
-            operation: ['createProject'],
-          },
-        },
-        description: 'Directory to create the project in',
-      },
-      {
-        displayName: 'Overwrite',
-        name: 'overwrite',
-        type: 'boolean',
-        default: false,
-        displayOptions: {
-          show: {
-            operation: ['createProject'],
-          },
-        },
-        description: 'Whether to overwrite existing spac/ directory',
-      },
-      {
-        displayName: 'Optional Specs',
-        name: 'optionalSpecs',
-        type: 'multiOptions',
-        options: [
-          { name: 'API Design', value: '05-API-DESIGN.md' },
-          { name: 'User Stories', value: '06-USER-STORIES.md' },
-          { name: 'Roadmap', value: '07-ROADMAP.md' },
-          { name: 'Sitemap', value: '08-SITEMAP.md' },
-        ],
-        default: ['05-API-DESIGN.md', '06-USER-STORIES.md', '07-ROADMAP.md', '08-SITEMAP.md'],
-        displayOptions: {
-          show: {
-            operation: ['createProject'],
-          },
-        },
-        description: 'Optional spec files to include',
       },
     ],
   };
@@ -146,58 +159,34 @@ export class SpacKit implements INodeType {
 
     for (let i = 0; i < items.length; i++) {
       try {
-        if (operation === 'createProject') {
-          const projectName = this.getNodeParameter('projectName', i) as string;
-          const preset = this.getNodeParameter('preset', i) as string;
-          const targetDir = this.getNodeParameter('targetDir', i) as string;
-          const overwrite = this.getNodeParameter('overwrite', i) as boolean;
-          const optionalSpecs = this.getNodeParameter('optionalSpecs', i) as string[];
-
-          // Use Node.js API via inline script
-          const script = `
-            const m = await import("@pirsquare.auto/spac-kit");
-            const r = await m.createProject(${JSON.stringify(projectName)}, {
-              preset: ${JSON.stringify(preset || undefined)},
-              optionalSpecs: ${JSON.stringify(optionalSpecs)},
-              overwrite: ${overwrite},
-              targetDir: ${JSON.stringify(targetDir)},
-            });
-            process.stdout.write(JSON.stringify({ success: true, projectDir: r.projectDir, spacDir: r.spacDir, files: r.files, fileCount: r.files.length }));
-          `.trim();
-
-          const { stdout } = await execAsync(
-            `npx -y @pirsquare.auto/spac-kit node -e '${script.replace(/'/g, "'\\''")}'`,
-            { timeout: 120000 },
-          ).catch(async () => {
-            // Fallback: use node directly with dynamic import
-            return execAsync(
-              `node --input-type=module -e "${script.replace(/"/g, '\\"')}"`,
-              { timeout: 120000, env: { ...process.env, NODE_PATH: '' } },
-            );
+        if (operation === 'getPresets') {
+          returnData.push({
+            json: {
+              presets: projectTypes,
+              requiredSpecs,
+              optionalSpecs,
+              installCommand: 'npx @pirsquare.auto/spac-kit init',
+            },
           });
-
-          returnData.push({ json: JSON.parse(stdout) });
-        } else if (operation === 'getPresets') {
-          const script = `
-            import{getPresets as a,getRequiredSpecs as b,getOptionalSpecs as c}from"@pirsquare.auto/spac-kit";
-            process.stdout.write(JSON.stringify({presets:a(),requiredSpecs:b(),optionalSpecs:c()}));
-          `.trim();
-          const { stdout } = await execAsync(
-            `node --input-type=module -e "${script.replace(/"/g, '\\"')}"`,
-            { timeout: 60000 },
-          );
-          returnData.push({ json: JSON.parse(stdout) });
         } else if (operation === 'getVersions') {
-          const script = `
-            import{fetchLatestVersions}from"@pirsquare.auto/spac-kit/versions";
-            const v=await fetchLatestVersions();
-            process.stdout.write(JSON.stringify(v));
-          `.trim();
-          const { stdout } = await execAsync(
-            `node --input-type=module -e "${script.replace(/"/g, '\\"')}"`,
-            { timeout: 60000 },
-          );
-          returnData.push({ json: JSON.parse(stdout) });
+          const versions = await fetchLatestVersions();
+          returnData.push({ json: versions });
+        } else if (operation === 'getSpecList') {
+          const presetValue = this.getNodeParameter('preset', i) as string;
+          const preset = projectTypes.find((p) => p.value === presetValue);
+          const allFiles = [
+            '00-SCOPE-OF-WORK.md',
+            ...requiredSpecs.map((s) => s.file),
+            ...(preset ? preset.defaultOptionalSpecs : optionalSpecs.map((s) => s.file)),
+          ];
+          returnData.push({
+            json: {
+              preset: preset?.name ?? 'Unknown',
+              files: allFiles,
+              fileCount: allFiles.length,
+              createCommand: `npx @pirsquare.auto/spac-kit init my-project`,
+            },
+          });
         }
       } catch (error: unknown) {
         if (this.continueOnFail()) {
